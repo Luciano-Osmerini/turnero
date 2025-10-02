@@ -1,0 +1,718 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>JV Spa Urbano - Panel Administrador</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			/* Estilos específicos para el panel de administrador */
+			.admin-container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 2rem;
+				background: rgba(0, 0, 0, 0.8);
+				border-radius: 10px;
+				margin-top: 2rem;
+			}
+
+			.login-form {
+				max-width: 400px;
+				margin: 0 auto;
+				text-align: center;
+			}
+
+			.login-form h2 {
+				color: #1cb495;
+				margin-bottom: 2rem;
+			}
+
+			.login-form .form-group {
+				margin-bottom: 1.5rem;
+				text-align: left;
+			}
+
+			.login-form label {
+				color: #ffffff;
+				font-weight: bold;
+				margin-bottom: 0.5rem;
+				display: block;
+			}
+
+			.login-form input {
+				width: 100%;
+				padding: 0.75rem;
+				background: rgba(255, 255, 255, 0.1);
+				border: 2px solid #1cb495;
+				border-radius: 5px;
+				color: #ffffff;
+				font-size: 1rem;
+			}
+
+			.login-form input:focus {
+				outline: none;
+				border-color: #17a085;
+				box-shadow: 0 0 8px rgba(28, 180, 149, 0.4);
+			}
+
+			.login-btn {
+				background: #1cb495;
+				color: #ffffff;
+				padding: 0.75rem 2rem;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 1rem;
+				font-weight: bold;
+				margin-top: 1rem;
+				width: 100%;
+			}
+
+			.login-btn:hover {
+				background: #17a085;
+			}
+
+			.error-message {
+				color: #e74c3c;
+				margin-top: 1rem;
+				font-weight: bold;
+			}
+
+			.admin-header {
+				text-align: center;
+				margin-bottom: 2rem;
+			}
+
+			.admin-header h1 {
+				color: #1cb495;
+				margin-bottom: 0.5rem;
+			}
+
+			.admin-header p {
+				color: rgba(255, 255, 255, 0.8);
+			}
+
+			.logout-btn {
+				float: right;
+				background: #e74c3c;
+				color: #ffffff;
+				padding: 0.5rem 1rem;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				text-decoration: none;
+			}
+
+			.logout-btn:hover {
+				background: #c0392b;
+			}
+
+			/* Calendario de administrador */
+			.admin-calendar {
+				background: rgba(255, 255, 255, 0.05);
+				border-radius: 10px;
+				padding: 2rem;
+				margin-top: 2rem;
+			}
+
+			.calendar-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 2rem;
+			}
+
+			.calendar-nav {
+				background: #1cb495;
+				color: #ffffff;
+				border: none;
+				padding: 0.5rem 1rem;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 1.2rem;
+				font-weight: bold;
+			}
+
+			.calendar-nav:hover {
+				background: #17a085;
+			}
+
+			.calendar-title {
+				color: #1cb495;
+				font-size: 1.8rem;
+				font-weight: bold;
+				margin: 0;
+			}
+
+			.calendar-grid {
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+				gap: 1px;
+				background: rgba(255, 255, 255, 0.1);
+				border-radius: 5px;
+				overflow: hidden;
+			}
+
+			.calendar-day-header {
+				background: #1cb495;
+				color: #ffffff;
+				padding: 1rem;
+				text-align: center;
+				font-weight: bold;
+			}
+
+			.calendar-day {
+				background: rgba(255, 255, 255, 0.05);
+				min-height: 120px;
+				padding: 0.5rem;
+				position: relative;
+			}
+
+			.calendar-day.other-month {
+				background: rgba(255, 255, 255, 0.02);
+				opacity: 0.5;
+			}
+
+			.calendar-day.today {
+				background: rgba(28, 180, 149, 0.2);
+			}
+
+			.day-number {
+				color: #ffffff;
+				font-weight: bold;
+				margin-bottom: 0.5rem;
+			}
+
+			.appointment {
+				background: #1cb495;
+				color: #ffffff;
+				padding: 0.25rem;
+				margin-bottom: 0.25rem;
+				border-radius: 3px;
+				font-size: 0.8rem;
+				cursor: pointer;
+			}
+
+			.appointment:hover {
+				background: #17a085;
+			}
+
+			.appointment-time {
+				font-weight: bold;
+			}
+
+			.appointment-client {
+				opacity: 0.9;
+			}
+
+			.appointment-service {
+				font-style: italic;
+				font-size: 0.7rem;
+			}
+
+			.no-appointments {
+				color: rgba(255, 255, 255, 0.5);
+				font-style: italic;
+				font-size: 0.8rem;
+			}
+
+			.stats-container {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+				gap: 1rem;
+				margin-bottom: 2rem;
+			}
+
+			.stat-card {
+				background: rgba(255, 255, 255, 0.1);
+				padding: 1.5rem;
+				border-radius: 8px;
+				text-align: center;
+			}
+
+			.stat-number {
+				font-size: 2rem;
+				font-weight: bold;
+				color: #1cb495;
+				margin-bottom: 0.5rem;
+			}
+
+			.stat-label {
+				color: rgba(255, 255, 255, 0.8);
+				font-size: 0.9rem;
+			}
+
+			.hidden {
+				display: none !important;
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Login Section -->
+		<div id="login-section" class="admin-container">
+			<div class="login-form">
+				<h2>🔐 Panel de Administrador</h2>
+				<p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem;">Acceso exclusivo para Jesica Vergara</p>
+				
+				<form id="admin-login-form">
+					<div class="form-group">
+						<label for="admin-username">👤 Usuario:</label>
+						<input type="text" id="admin-username" name="username" required placeholder="Ingresá tu nombre de usuario">
+					</div>
+					<div class="form-group">
+						<label for="admin-password">🔒 Contraseña:</label>
+						<input type="password" id="admin-password" name="password" required placeholder="Ingresá tu contraseña">
+					</div>
+					<button type="submit" class="login-btn">🚀 Ingresar al Panel</button>
+					<div id="login-error" class="error-message hidden"></div>
+				</form>
+			</div>
+		</div>
+
+		<!-- Admin Panel -->
+		<div id="admin-panel" class="admin-container hidden">
+			<div class="admin-header">
+				<div>
+					<button class="logout-btn" id="logout-btn">🚪 Cerrar Sesión</button>
+					<button class="logout-btn" id="debug-btn" style="margin-right: 1em; background: #17a2b8;">🔍 Debug</button>
+					<button class="logout-btn" id="refresh-btn" style="margin-right: 1em; background: #28a745;">🔄 Refrescar</button>
+				</div>
+				<h1>💆‍♀️ Panel de Administrador - JV Spa Urbano</h1>
+				<p>Bienvenida Jesica! Aquí podés ver todos tus turnos del mes</p>
+				<div id="debug-info" class="hidden" style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; font-size: 0.9rem;"></div>
+			</div>
+
+			<!-- Estadísticas -->
+			<div class="stats-container">
+				<div class="stat-card">
+					<div class="stat-number" id="total-appointments">0</div>
+					<div class="stat-label">📅 Turnos este mes</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-number" id="today-appointments">0</div>
+					<div class="stat-label">🕐 Turnos hoy</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-number" id="week-appointments">0</div>
+					<div class="stat-label">📆 Turnos esta semana</div>
+				</div>
+			</div>
+
+			<!-- Calendario -->
+			<div class="admin-calendar">
+				<div class="calendar-header">
+					<button class="calendar-nav" id="prev-month">← Mes Anterior</button>
+					<h3 class="calendar-title" id="current-month-title"></h3>
+					<button class="calendar-nav" id="next-month">Mes Siguiente →</button>
+				</div>
+				<div class="calendar-grid" id="admin-calendar-grid">
+					<div class="calendar-day-header">Dom</div>
+					<div class="calendar-day-header">Lun</div>
+					<div class="calendar-day-header">Mar</div>
+					<div class="calendar-day-header">Mié</div>
+					<div class="calendar-day-header">Jue</div>
+					<div class="calendar-day-header">Vie</div>
+					<div class="calendar-day-header">Sáb</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Firebase Scripts -->
+		<script type="module">
+			// Import Firebase modules
+			import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+			import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+			// Firebase configuration
+			const firebaseConfig = {
+				apiKey: "AIzaSy4xJh7UfinFp_xCaADq1SlY3qO4FDlw",
+				authDomain: "jv-spa-turnos.firebaseapp.com",
+				projectId: "jv-spa-turnos",
+				storageBucket: "jv-spa-turnos.firebasestorage.app",
+				messagingSenderId: "525378824571",
+				appId: "1:525378824571:web:732806a7a368575e475de"
+			};
+
+			// Initialize Firebase
+			const app = initializeApp(firebaseConfig);
+			const db = getFirestore(app);
+
+			// Make Firebase available globally
+			window.firebaseDb = db;
+			window.firebaseModules = {
+				collection,
+				addDoc,
+				getDocs,
+				query,
+				where,
+				orderBy,
+				onSnapshot
+			};
+		</script>
+		
+		<!-- Main App Script -->
+		<script src="assets/js/main.js"></script>
+		<script>
+			// Sistema de administrador
+			const AdminPanel = {
+				currentMonth: new Date(),
+				appointments: [], // Se llenará con datos simulados
+				isLoggedIn: false,
+
+				// Datos de login
+				credentials: {
+					username: 'Jesica Vergara',
+					password: 'Jesica Vergara'
+				},
+
+			init: async function() {
+				await this.loadAppointments();
+				this.bindEvents();
+				this.checkLogin();
+				this.startAutoRefresh();
+			},				loadAppointments: async function() {
+					// Cargar turnos reales desde Firebase
+					try {
+						if (!window.firebaseDb) {
+							console.log('Firebase no disponible, usando localStorage como respaldo');
+							const storedAppointments = localStorage.getItem('jvSpaAppointments');
+							this.appointments = storedAppointments ? JSON.parse(storedAppointments) : [];
+						} else {
+							const { collection, getDocs } = window.firebaseModules;
+							const appointmentsRef = collection(window.firebaseDb, 'appointments');
+							const querySnapshot = await getDocs(appointmentsRef);
+							
+							this.appointments = [];
+							querySnapshot.forEach((doc) => {
+								this.appointments.push({ id: doc.id, ...doc.data() });
+							});
+						}
+						
+						// Si no hay turnos reales, mostrar algunos de ejemplo para demostración
+						if (this.appointments.length === 0) {
+							this.loadSampleData();
+						}
+					} catch (e) {
+						console.error('Error al cargar turnos:', e);
+						this.appointments = [];
+						this.loadSampleData();
+					}
+				},
+
+				loadSampleData: function() {
+					// Solo para demostración cuando no hay turnos reales
+					const today = new Date();
+					const currentMonth = today.getMonth();
+					const currentYear = today.getFullYear();
+
+					this.appointments = [
+						{
+							id: 999991,
+							date: new Date(currentYear, currentMonth, 5).toISOString().split('T')[0],
+							time: '09:30',
+							clientName: 'María González (Demo)',
+							clientPhone: '351-123-4567',
+							service: 'Limpieza Profunda',
+							isDemo: true
+						},
+						{
+							id: 999992,
+							date: new Date(currentYear, currentMonth, 8).toISOString().split('T')[0],
+							time: '14:00',
+							clientName: 'Ana López (Demo)',
+							clientPhone: '351-987-6543',
+							service: 'Masajes Desc. Superior',
+							isDemo: true
+						}
+					];
+				},
+
+				bindEvents: function() {
+					// Login
+					document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+						e.preventDefault();
+						await this.handleLogin();
+					});
+
+				// Logout
+				document.getElementById('logout-btn').addEventListener('click', () => {
+					this.logout();
+				});
+
+				// Debug
+				document.getElementById('debug-btn').addEventListener('click', () => {
+					this.showDebugInfo();
+				});
+
+				// Refresh
+				document.getElementById('refresh-btn').addEventListener('click', () => {
+					this.refreshData();
+					this.renderCalendar();
+					this.updateStats();
+					alert('✅ Panel actualizado! Si había un turno nuevo, ahora debería aparecer.');
+				});					// Navegación del calendario
+					document.getElementById('prev-month').addEventListener('click', () => {
+						this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
+						this.renderCalendar();
+						this.updateStats();
+					});
+
+					document.getElementById('next-month').addEventListener('click', () => {
+						this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
+						this.renderCalendar();
+						this.updateStats();
+					});
+				},
+
+				handleLogin: async function() {
+					const username = document.getElementById('admin-username').value;
+					const password = document.getElementById('admin-password').value;
+
+					if (username === this.credentials.username && password === this.credentials.password) {
+						this.isLoggedIn = true;
+						this.showAdminPanel();
+						await this.loadAppointments();
+						this.renderCalendar();
+						this.updateStats();
+					} else {
+						this.showError('Usuario o contraseña incorrectos');
+					}
+				},
+
+				showError: function(message) {
+					const errorDiv = document.getElementById('login-error');
+					errorDiv.textContent = message;
+					errorDiv.classList.remove('hidden');
+				},
+
+				showAdminPanel: function() {
+					document.getElementById('login-section').classList.add('hidden');
+					document.getElementById('admin-panel').classList.remove('hidden');
+				},
+
+				logout: function() {
+					this.isLoggedIn = false;
+					document.getElementById('admin-panel').classList.add('hidden');
+					document.getElementById('login-section').classList.remove('hidden');
+					document.getElementById('admin-login-form').reset();
+					document.getElementById('login-error').classList.add('hidden');
+				},
+
+			checkLogin: function() {
+				// En una implementación real, verificarías la sesión guardada
+				this.logout();
+			},
+
+			startAutoRefresh: function() {
+				// Actualizar cada 30 segundos para mostrar nuevos turnos
+				setInterval(async () => {
+					if (this.isLoggedIn) {
+						await this.refreshData();
+					}
+				}, 30000);
+			},
+
+			refreshData: async function() {
+				const oldCount = this.appointments.length;
+				await this.loadAppointments();
+				const newCount = this.appointments.length;
+				
+				// Si hay nuevos turnos, actualizar la vista
+				if (newCount > oldCount) {
+					this.renderCalendar();
+					this.updateStats();
+					// Actualizar debug si está visible
+					if (!document.getElementById('debug-info').classList.contains('hidden')) {
+						this.showDebugInfo();
+						this.showDebugInfo(); // Toggle twice to refresh
+					}
+					console.log('🔔 Nuevos turnos detectados!');
+				}
+			},				renderCalendar: function() {
+					const monthNames = [
+						'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+						'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+					];
+
+					const currentMonth = this.currentMonth.getMonth();
+					const currentYear = this.currentMonth.getFullYear();
+
+					// Actualizar título
+					document.getElementById('current-month-title').textContent = 
+						`${monthNames[currentMonth]} ${currentYear}`;
+
+					// Limpiar calendario anterior
+					const grid = document.getElementById('admin-calendar-grid');
+					const existingDays = grid.querySelectorAll('.calendar-day');
+					existingDays.forEach(day => day.remove());
+
+					// Calcular días del mes
+					const firstDay = new Date(currentYear, currentMonth, 1);
+					const lastDay = new Date(currentYear, currentMonth + 1, 0);
+					const daysInMonth = lastDay.getDate();
+					const startingDayOfWeek = firstDay.getDay();
+
+					// Días del mes anterior
+					const prevMonth = new Date(currentYear, currentMonth - 1, 0);
+					for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+						const dayNum = prevMonth.getDate() - i;
+						const dayDiv = this.createDayElement(dayNum, true);
+						grid.appendChild(dayDiv);
+					}
+
+					// Días del mes actual
+					for (let day = 1; day <= daysInMonth; day++) {
+						const date = new Date(currentYear, currentMonth, day);
+						const dayDiv = this.createDayElement(day, false, date);
+						grid.appendChild(dayDiv);
+					}
+
+					// Completar semanas restantes
+					const totalCells = grid.children.length - 7; // Restar headers
+					const remainingCells = 42 - totalCells;
+					for (let day = 1; day <= remainingCells; day++) {
+						const dayDiv = this.createDayElement(day, true);
+						grid.appendChild(dayDiv);
+					}
+				},
+
+				createDayElement: function(dayNumber, isOtherMonth = false, date = null) {
+					const dayDiv = document.createElement('div');
+					dayDiv.className = 'calendar-day';
+					
+					if (isOtherMonth) {
+						dayDiv.classList.add('other-month');
+					}
+
+					// Marcar día actual
+					if (date && this.isToday(date)) {
+						dayDiv.classList.add('today');
+					}
+
+					const dayNumberDiv = document.createElement('div');
+					dayNumberDiv.className = 'day-number';
+					dayNumberDiv.textContent = dayNumber;
+					dayDiv.appendChild(dayNumberDiv);
+
+					// Agregar turnos si es del mes actual
+					if (!isOtherMonth && date) {
+						const dayAppointments = this.getAppointmentsForDate(date);
+						if (dayAppointments.length > 0) {
+							dayAppointments.forEach(appointment => {
+								const appointmentDiv = document.createElement('div');
+								appointmentDiv.className = 'appointment';
+								appointmentDiv.innerHTML = `
+									<div class="appointment-time">${appointment.time}</div>
+									<div class="appointment-client">${appointment.clientName}</div>
+									<div class="appointment-service">${appointment.service}</div>
+								`;
+								appointmentDiv.addEventListener('click', () => {
+									this.showAppointmentDetails(appointment);
+								});
+								dayDiv.appendChild(appointmentDiv);
+							});
+						}
+					}
+
+					return dayDiv;
+				},
+
+				getAppointmentsForDate: function(date) {
+					const dateStr = date.toISOString().split('T')[0];
+					return this.appointments.filter(apt => apt.date === dateStr);
+				},
+
+				isToday: function(date) {
+					const today = new Date();
+					return date.toDateString() === today.toDateString();
+				},
+
+			showAppointmentDetails: function(appointment) {
+				const isDemo = appointment.isDemo ? '\n🎨 (Turno de demostración)' : '';
+				const createdAt = appointment.createdAt ? 
+					`\n🕰️ Reservado: ${new Date(appointment.createdAt).toLocaleString('es-AR')}` : '';
+				
+				alert(`Turno Detallado:
+📅 Fecha: ${new Date(appointment.date).toLocaleDateString('es-AR')}
+🕐 Hora: ${appointment.time}
+👤 Cliente: ${appointment.clientName}
+📱 Teléfono: ${appointment.clientPhone}
+💆‍♀️ Servicio: ${appointment.service}${createdAt}${isDemo}`);
+			},
+
+			showDebugInfo: function() {
+				const debugDiv = document.getElementById('debug-info');
+				debugDiv.classList.toggle('hidden');
+				
+				if (!debugDiv.classList.contains('hidden')) {
+					const storedData = localStorage.getItem('jvSpaAppointments');
+					const parsedData = storedData ? JSON.parse(storedData) : [];
+					
+					debugDiv.innerHTML = `
+						<h4>🔍 Información de Debug:</h4>
+						<p><strong>Fecha actual:</strong> ${new Date().toLocaleString('es-AR')}</p>
+						<p><strong>Mes del calendario:</strong> ${this.currentMonth.toLocaleDateString('es-AR', { month: 'long', year: 'numeric' })}</p>
+						<p><strong>Total turnos en memoria:</strong> ${this.appointments.length}</p>
+						<p><strong>Turnos en localStorage:</strong> ${parsedData.length}</p>
+						<hr>
+						<p><strong>Turnos guardados:</strong></p>
+						<pre style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 5px; white-space: pre-wrap; max-height: 200px; overflow-y: auto;">${JSON.stringify(parsedData, null, 2)}</pre>
+						<hr>
+						<p><strong>Búsqueda de turno 17 oct 19:30:</strong></p>
+						<pre>${this.searchSpecificAppointment('2025-10-17', '19:30')}</pre>
+					`;
+				}
+			},
+
+			searchSpecificAppointment: function(targetDate, targetTime) {
+				const found = this.appointments.filter(apt => {
+					return apt.date === targetDate && apt.time === targetTime;
+				});
+				
+				if (found.length > 0) {
+					return `✅ ENCONTRADO: ${JSON.stringify(found[0], null, 2)}`;
+				} else {
+					return `❌ NO ENCONTRADO. Turnos disponibles:\n${this.appointments.map(apt => `- ${apt.date} ${apt.time} ${apt.clientName}`).join('\n')}`;
+				}
+			},				updateStats: function() {
+					const currentMonth = this.currentMonth.getMonth();
+					const currentYear = this.currentMonth.getFullYear();
+					const today = new Date();
+
+					// Turnos del mes actual
+					const monthAppointments = this.appointments.filter(apt => {
+						const aptDate = new Date(apt.date);
+						return aptDate.getMonth() === currentMonth && aptDate.getFullYear() === currentYear;
+					});
+
+					// Turnos de hoy
+					const todayStr = today.toISOString().split('T')[0];
+					const todayAppointments = this.appointments.filter(apt => apt.date === todayStr);
+
+					// Turnos de esta semana
+					const weekStart = new Date(today);
+					weekStart.setDate(today.getDate() - today.getDay());
+					const weekEnd = new Date(weekStart);
+					weekEnd.setDate(weekStart.getDate() + 6);
+
+					const weekAppointments = this.appointments.filter(apt => {
+						const aptDate = new Date(apt.date);
+						return aptDate >= weekStart && aptDate <= weekEnd;
+					});
+
+					// Actualizar estadísticas
+					document.getElementById('total-appointments').textContent = monthAppointments.length;
+					document.getElementById('today-appointments').textContent = todayAppointments.length;
+					document.getElementById('week-appointments').textContent = weekAppointments.length;
+				}
+			};
+
+			// Inicializar cuando carga la página
+			window.addEventListener('load', async function() {
+				await AdminPanel.init();
+			});
+		</script>
+
+	</body>
+</html>

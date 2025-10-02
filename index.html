@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>JV Spa Urbano - Reservar Turno</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+		<header id="header">
+			<h1>JV Spa Urbano</h1>
+			<p>Turnero Online</p>
+			<ul class="icons">
+				<li><a href="https://wa.me/543516742801" class="icon brands fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+				<li><a href="https://www.instagram.com/j_v.estetica?igsh=MTZjbDllc2Q1cm0wbQ=" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="https://www.facebook.com/share/19rqFFXsFa/" class="icon brands fa-facebook"><span class="label">Facebook</span></a></li>
+			</ul>
+			
+			<!-- Botón de acceso al panel de administrador -->
+			<div class="admin-access">
+				<a href="admin.html" class="admin-btn" title="Panel de Administrador - Solo para Jesica">
+					🔑 Admin
+				</a>
+			</div>
+		</header>
+
+		<!-- Sistema de Turnos -->
+		<div id="booking-system">
+			
+			<!-- Paso 1: Calendario -->
+			<div id="calendar-section" class="booking-step active">
+				<h2>Paso 1: Elegí tu día</h2>
+				<div id="calendar-container">
+					<div class="calendar-header">
+						<button id="prev-month" class="nav-btn">&lt;</button>
+						<h3 id="current-month"></h3>
+						<button id="next-month" class="nav-btn">&gt;</button>
+					</div>
+					<div id="calendar-grid">
+						<div class="day-header">Dom</div>
+						<div class="day-header">Lun</div>
+						<div class="day-header">Mar</div>
+						<div class="day-header">Mié</div>
+						<div class="day-header">Jue</div>
+						<div class="day-header">Vie</div>
+						<div class="day-header">Sáb</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Paso 2: Horarios -->
+			<div id="time-section" class="booking-step">
+				<h2>Paso 2: Elegí tu horario</h2>
+				<p id="selected-date-display"></p>
+				<div id="time-slots">
+					<!-- Los horarios se cargarán aquí dinámicamente -->
+				</div>
+				<button id="back-to-calendar" class="back-btn">← Volver al calendario</button>
+			</div>
+
+			<!-- Paso 3: Datos del Cliente -->
+			<div id="client-section" class="booking-step">
+				<h2>Paso 3: Completá tus datos</h2>
+				<p id="booking-summary"></p>
+				<form id="client-form">
+					<div class="form-group">
+						<label for="client-name">Nombre completo *</label>
+						<input type="text" id="client-name" name="name" required placeholder="Ingresá tu nombre completo">
+					</div>
+					<div class="form-group">
+						<label for="client-phone">Teléfono *</label>
+						<input type="tel" id="client-phone" name="phone" required placeholder="Ej: 351-1234567">
+					</div>
+					<div class="form-group">
+						<label for="client-service">Servicio (opcional)</label>
+						<select id="client-service" name="service">
+							<option value="">Seleccionar servicio...</option>
+							<optgroup label="💆‍♀️ SERVICIOS FACIALES">
+								<option value="limpieza-profunda">Limpieza Profunda - $16.000 (45 min)</option>
+								<option value="renovacion-celular">Renovación Celular - $20.000 (60 min)</option>
+								<option value="estimulacion-celular">Estimulación Celular - $25.000 (60 min)</option>
+								<option value="exosomas">Exosomas - $30.000 (75 min)</option>
+								<option value="dermaplaning">Dermaplaning - $19.000</option>
+							</optgroup>
+							<optgroup label="🙌 MASAJES">
+								<option value="masajes-desc-superior">Masajes Desc. Superior - $16.000 (45 min)</option>
+								<option value="masajes-desc-cuerpo">Masajes Desc. Cuerpo/c - $22.000 (75 min)</option>
+								<option value="drenantes-piernas">Drenantes Piernas - $12.000 (30 min)</option>
+								<option value="drenantes-cuerpo-comp">Drenantes Cuerpo Comp. - $22.000 (75 min)</option>
+							</optgroup>
+							<optgroup label="👁️ CEJAS">
+								<option value="laminado-perfilado-visagismo">Laminado-Perfilado-Visagismo - $17.000 (60 min)</option>
+								<option value="perfilado-visagismo">Perfilado Visagismo - $10.000 (30 min)</option>
+								<option value="cejas-completas-henna">Cejas Completas + Henna - $20.000 (60 min)</option>
+							</optgroup>
+							<optgroup label="🌟 TRATAMIENTO CORPORAL">
+								<option value="tratamiento-corporal">Tratamiento Corporal (60 min)</option>
+							</optgroup>
+						</select>
+					</div>
+					<button type="submit" id="confirm-booking">Confirmar Turno</button>
+					<button type="button" id="back-to-time" class="back-btn">← Volver a horarios</button>
+				</form>
+			</div>
+
+			<!-- Paso 4: Políticas y Confirmación -->
+			<div id="policies-section" class="booking-step">
+				<h2>Paso 4: Políticas y Seña</h2>
+				<div id="final-booking-summary"></div>
+				
+				<div class="policies-container">
+					<h3>📋 Políticas de Turnos</h3>
+					<ul class="policies-list">
+						<li>✓ Los turnos se reservan con seña</li>
+						<li>⏰ 15 min de tolerancia</li>
+						<li>📅 En caso de reprogramar el turno realizarlo 1 día de anticipación, caso contrario pierde la seña o la sesión si está dentro de un tratamiento</li>
+						<li>💰 Los presupuestos son válidos por 30 días de todos los servicios</li>
+					</ul>
+				</div>
+
+				<div class="payment-info">
+					<h3>💳 Información de Seña</h3>
+					<div class="payment-details">
+						<div class="payment-item">
+							<strong>💰 Monto:</strong> $8,000
+						</div>
+						<div class="payment-item">
+							<strong>🏷️ Alias:</strong> jv.spaurbano
+						</div>
+						<div class="payment-item">
+							<strong>👤 Datos:</strong> Jesica Vanesa Vergara
+						</div>
+						<div class="payment-item">
+							<strong>📱 Medio:</strong> Mercado Pago
+						</div>
+					</div>
+				</div>
+
+				<div class="final-actions">
+					<button id="final-confirm-booking" class="primary-btn">
+						📱 Confirmar y Enviar por WhatsApp
+					</button>
+					<button type="button" id="back-to-form" class="back-btn">← Volver a datos</button>
+				</div>
+			</div>
+
+			<!-- Confirmación -->
+			<div id="confirmation-section" class="booking-step">
+				<h2>¡Turno Confirmado!</h2>
+				<div id="confirmation-details"></div>
+				<p>Se ha enviado la confirmación por WhatsApp. Recordá realizar la seña para asegurar tu turno.</p>
+				<button id="new-booking" class="primary-btn">Reservar otro turno</button>
+			</div>
+
+		</div>
+
+
+				
+
+
+				
+
+
+
+					<!-- Formulario para agregar/editar servicio -->
+					<div id="service-form-modal" class="modal hidden">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h3 id="service-form-title">✨ Agregar Servicio</h3>
+								<button type="button" class="close-modal" id="close-service-modal">×</button>
+							</div>
+							<form id="service-form">
+								<div class="form-row">
+									<div class="form-group full-width">
+										<label for="service-name">💅 Nombre del Servicio *</label>
+										<input type="text" id="service-name" name="name" required placeholder="Ej: Masaje Relajante">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group">
+										<label for="service-price">💰 Precio *</label>
+										<div class="price-input">
+											<span class="currency">$</span>
+											<input type="number" id="service-price" name="price" required placeholder="0" min="0">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="service-duration">⏱️ Duración</label>
+										<select id="service-duration" name="duration">
+											<option value="30">🕑 30 minutos</option>
+											<option value="45">🕜 45 minutos</option>
+											<option value="60">🕐 1 hora</option>
+											<option value="90">🕖 1.5 horas</option>
+											<option value="120">🕙 2 horas</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="service-description">📝 Descripción del servicio</label>
+									<textarea id="service-description" name="description" placeholder="Contános más sobre este tratamiento..."></textarea>
+								</div>
+								<div class="form-actions">
+									<button type="submit" class="save-btn">
+										<span class="btn-icon">✅</span>
+										<span>Guardar Servicio</span>
+									</button>
+									<button type="button" id="cancel-service-form" class="cancel-btn">
+										<span class="btn-icon">❌</span>
+										<span>Cancelar</span>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+		</footer>
+
+		<!-- Firebase Scripts -->
+		<script type="module">
+			// Import Firebase modules
+			import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+			import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+			// Firebase configuration
+			const firebaseConfig = {
+				apiKey: "AIzaSy4xJh7UfinFp_xCaADq1SlY3qO4FDlw",
+				authDomain: "jv-spa-turnos.firebaseapp.com",
+				projectId: "jv-spa-turnos",
+				storageBucket: "jv-spa-turnos.firebasestorage.app",
+				messagingSenderId: "525378824571",
+				appId: "1:525378824571:web:732806a7a368575e475de"
+			};
+
+			// Initialize Firebase
+			const app = initializeApp(firebaseConfig);
+			const db = getFirestore(app);
+
+			// Make Firebase available globally
+			window.firebaseDb = db;
+			window.firebaseModules = {
+				collection,
+				addDoc,
+				getDocs,
+				query,
+				where,
+				orderBy,
+				onSnapshot
+			};
+		</script>
+		
+		<!-- Main App Script -->
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
