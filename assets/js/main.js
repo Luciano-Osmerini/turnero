@@ -1,6 +1,5 @@
 /*
 	JV Spa Urbano - Sistema de Turnos Online
-	Basado en Eventually by HTML5 UP
 */
 
 (function() {
@@ -72,15 +71,59 @@
 		selectedTime: null,
 		currentStep: 1,
 		
-		// Horarios disponibles (en formato 24h)
-		availableTimes: [
+		// Horarios base (se filtran según el día)
+		baseTimes: [
 			'09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+			'12:00', '12:30', '13:00', '13:30',
 			'14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
 			'17:00', '17:30', '18:00', '18:30', '19:00', '19:30'
 		],
 
-		// Días de la semana que está abierto (1=lunes, 6=sábado)
-		workingDays: [1, 2, 3, 4, 5, 6],
+		// Función para obtener horarios disponibles según el día
+		getAvailableTimesForDay: function(date) {
+			const dayOfWeek = date.getDay(); // 0=domingo, 1=lunes, ..., 6=sábado
+			
+			switch(dayOfWeek) {
+				case 1: // Lunes - de 14:00 a 19:30
+					return this.baseTimes.filter(time => {
+						const hour = parseInt(time.split(':')[0]);
+						return hour >= 14 && hour <= 19;
+					});
+					
+				case 2: // Martes - de 09:00 a 18:00
+					return this.baseTimes.filter(time => {
+						const hour = parseInt(time.split(':')[0]);
+						return hour >= 9 && hour < 18;
+					});
+					
+				case 3: // Miércoles - de 14:00 a 19:30
+					return this.baseTimes.filter(time => {
+						const hour = parseInt(time.split(':')[0]);
+						return hour >= 14 && hour <= 19;
+					});
+					
+				case 4: // Jueves - de 09:00 a 18:00
+					return this.baseTimes.filter(time => {
+						const hour = parseInt(time.split(':')[0]);
+						return hour >= 9 && hour < 18;
+					});
+					
+				case 5: // Viernes - de 09:00 a 16:00
+					return this.baseTimes.filter(time => {
+						const hour = parseInt(time.split(':')[0]);
+						return hour >= 9 && hour < 16;
+					});
+					
+				case 6: // Sábado - CERRADO (Jessica no trabaja sábados)
+					return [];
+					
+				default: // Domingo - cerrado
+					return [];
+			}
+		},
+
+		// Días de la semana que está abierto (1=lunes a 5=viernes)
+		workingDays: [1, 2, 3, 4, 5],
 
 		// Sistema de gestión de turnos con Firebase
 		getStoredAppointments: async function() {
@@ -320,7 +363,15 @@
 			const container = document.getElementById('time-slots');
 			container.innerHTML = '';
 
-			for (const time of this.availableTimes) {
+			// Obtener horarios específicos para este día
+			const availableTimesForDay = this.getAvailableTimesForDay(this.selectedDate);
+			
+			if (availableTimesForDay.length === 0) {
+				container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.8); padding: 2rem;">📅 No hay horarios disponibles para este día</p>';
+				return;
+			}
+
+			for (const time of availableTimesForDay) {
 				const isAvailable = await this.isTimeAvailable(time);
 				const slot = document.createElement('div');
 				slot.className = `time-slot ${isAvailable ? '' : 'unavailable'}`;

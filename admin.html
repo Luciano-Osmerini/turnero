@@ -245,6 +245,197 @@
 			.hidden {
 				display: none !important;
 			}
+
+			/* Botones de acción */
+			.admin-actions {
+				display: flex;
+				gap: 1rem;
+				margin-bottom: 2rem;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			.action-button {
+				padding: 0.75rem 1.5rem;
+				border: none;
+				border-radius: 8px;
+				color: white;
+				font-weight: bold;
+				cursor: pointer;
+				font-size: 0.9rem;
+				transition: all 0.3s ease;
+			}
+
+			.add-btn { background: #28a745; }
+			.add-btn:hover { background: #218838; }
+
+			.block-btn { background: #dc3545; }
+			.block-btn:hover { background: #c82333; }
+
+			.fixed-btn { background: #007bff; }
+			.fixed-btn:hover { background: #0056b3; }
+
+			/* Lista de turnos del día */
+			.appointments-list-container {
+				background: rgba(255, 255, 255, 0.1);
+				padding: 1.5rem;
+				border-radius: 10px;
+				margin-bottom: 2rem;
+			}
+
+			.appointments-list-container h3 {
+				color: #1cb495;
+				margin-bottom: 1rem;
+				text-align: center;
+			}
+
+			.appointment-item {
+				background: rgba(255, 255, 255, 0.1);
+				padding: 1rem;
+				margin-bottom: 0.5rem;
+				border-radius: 5px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.appointment-info {
+				flex-grow: 1;
+			}
+
+			.appointment-actions {
+				display: flex;
+				gap: 0.5rem;
+			}
+
+			.btn-small {
+				padding: 0.25rem 0.5rem;
+				border: none;
+				border-radius: 3px;
+				color: white;
+				cursor: pointer;
+				font-size: 0.8rem;
+			}
+
+			.btn-delete { background: #dc3545; }
+			.btn-edit { background: #ffc107; color: #000; }
+			
+			.calendar-day.clickable {
+				cursor: pointer;
+				transition: background-color 0.2s;
+			}
+			
+			.calendar-day.clickable:hover {
+				background: rgba(28, 180, 149, 0.3) !important;
+			}
+			
+			.calendar-day.selected {
+				background: rgba(28, 180, 149, 0.5) !important;
+				border: 2px solid #1cb495;
+			}
+
+			/* Modal Styles */
+			.modal {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.8);
+				z-index: 1000;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.modal-content {
+				background: rgba(0, 0, 0, 0.9);
+				padding: 2rem;
+				border-radius: 10px;
+				width: 90%;
+				max-width: 500px;
+				border: 2px solid #1cb495;
+			}
+
+			.modal-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 1.5rem;
+			}
+
+			.modal-header h2 {
+				color: #1cb495;
+				margin: 0;
+			}
+
+			.close-btn {
+				background: none;
+				border: none;
+				color: #ffffff;
+				font-size: 1.5rem;
+				cursor: pointer;
+				padding: 0;
+				width: 30px;
+				height: 30px;
+			}
+
+			.form-group {
+				margin-bottom: 1rem;
+			}
+
+			.form-group label {
+				display: block;
+				color: #ffffff;
+				margin-bottom: 0.5rem;
+				font-weight: bold;
+			}
+
+			.form-group input,
+			.form-group select {
+				width: 100%;
+				padding: 0.75rem;
+				background: rgba(255, 255, 255, 0.1);
+				border: 2px solid #1cb495;
+				border-radius: 5px;
+				color: #ffffff;
+				font-size: 1rem;
+			}
+
+			.form-group input:focus,
+			.form-group select:focus {
+				outline: none;
+				border-color: #17a085;
+				box-shadow: 0 0 8px rgba(28, 180, 149, 0.4);
+			}
+
+			.form-actions {
+				display: flex;
+				gap: 1rem;
+				justify-content: end;
+				margin-top: 1.5rem;
+			}
+
+			.cancel-btn {
+				background: #6c757d;
+				color: white;
+				padding: 0.75rem 1.5rem;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			.save-btn {
+				background: #28a745;
+				color: white;
+				padding: 0.75rem 1.5rem;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			.cancel-btn:hover { background: #545b62; }
+			.save-btn:hover { background: #218838; }
 		</style>
 	</head>
 	<body class="is-preload">
@@ -280,6 +471,22 @@
 				</div>
 				<h1>💆‍♀️ Panel de Administrador - JV Spa Urbano</h1>
 				<p>Bienvenida Jesica! Aquí podés ver todos tus turnos del mes</p>
+				
+				<!-- Información de Horarios -->
+				<div class="schedule-info" style="background: rgba(28, 180, 149, 0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; border-left: 4px solid #1cb495;">
+					<h4 style="color: #1cb495; margin-bottom: 0.5rem;">📅 Horarios de Atención de Jessica</h4>
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.5rem; font-size: 0.85rem;">
+						<div><strong>� Lunes:</strong> 14:00 - 19:30 (Tarde)</div>
+						                        <p><strong>� Martes:</strong> 09:00 - 18:00 (Completo)</p>
+						<div><strong>� Miércoles:</strong> 14:00 - 19:30 (Tarde)</div>
+						<div>                        <p><strong>� Jueves:</strong> 09:00 - 18:00 (Completo)</p></div>
+						<div><strong>� Viernes:</strong> 09:00 - 16:00 (Reducido)</div>
+						<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">
+							<strong>🔴 Sábados y Domingos:</strong> CERRADO
+						</div>
+					</div>
+				</div>
+				
 				<div id="debug-info" class="hidden" style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; font-size: 0.9rem;"></div>
 			</div>
 
@@ -297,6 +504,19 @@
 					<div class="stat-number" id="week-appointments">0</div>
 					<div class="stat-label">📆 Turnos esta semana</div>
 				</div>
+			</div>
+
+			<!-- Botones de Acción Rápida -->
+			<div class="admin-actions">
+				<button class="action-button add-btn" id="add-appointment-btn">➕ Agregar Turno</button>
+				<button class="action-button block-btn" id="block-time-btn">🚫 Ocupar Horario</button>
+				<button class="action-button fixed-btn" id="add-fixed-btn">📌 Turno Fijo</button>
+			</div>
+
+			<!-- Lista de Turnos del Día Seleccionado -->
+			<div class="appointments-list-container">
+				<h3 id="selected-date-title">Seleccionar un día en el calendario</h3>
+				<div id="day-appointments-list"></div>
 			</div>
 
 			<!-- Calendario -->
@@ -318,11 +538,76 @@
 			</div>
 		</div>
 
+		<!-- Modales para gestión de turnos -->
+		<div id="appointment-modal" class="modal hidden">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 id="modal-title">Agregar Turno</h2>
+					<button class="close-btn" id="close-modal">&times;</button>
+				</div>
+				<form id="appointment-form">
+					<div class="form-group">
+						<label for="appointment-date">Fecha:</label>
+						<input type="date" id="appointment-date" required>
+					</div>
+					<div class="form-group">
+						<label for="appointment-time">Hora:</label>
+						<select id="appointment-time" required>
+							<option value="">Seleccionar hora (depende del día)</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="client-name">Cliente:</label>
+						<input type="text" id="client-name" placeholder="Nombre del cliente" required>
+					</div>
+					<div class="form-group">
+						<label for="client-phone">Teléfono:</label>
+						<input type="tel" id="client-phone" placeholder="Ej: 351-1234567" required>
+					</div>
+					<div class="form-group">
+						<label for="service-select">Servicio:</label>
+						<select id="service-select" required>
+							<option value="">Seleccionar servicio</option>
+							<optgroup label="Faciales">
+								<option value="Limpieza Profunda">Limpieza Profunda - $16.000</option>
+								<option value="Renovación Celular">Renovación Celular - $20.000</option>
+								<option value="Estimulación Celular">Estimulación Celular - $25.000</option>
+								<option value="Exosomas">Exosomas - $30.000</option>
+								<option value="Dermaplaning">Dermaplaning - $19.000</option>
+							</optgroup>
+							<optgroup label="Masajes">
+								<option value="Masajes Desc. Superior">Masajes Desc. Superior - $16.000</option>
+								<option value="Masajes desc. Cuerpo/c">Masajes desc. Cuerpo/c - $22.000</option>
+								<option value="Drenantes Piernas">Drenantes Piernas - $12.000</option>
+								<option value="Drenantes Cuerpo Comp.">Drenantes Cuerpo Comp. - $22.000</option>
+							</optgroup>
+							<optgroup label="Cejas">
+								<option value="Laminado-Perfilado-Visagismo">Laminado-Perfilado-Visagismo - $17.000</option>
+								<option value="Perfilado Visagismo">Perfilado Visagismo - $10.000</option>
+								<option value="Cejas Completas + Henna">Cejas Completas + Henna - $20.000</option>
+							</optgroup>
+							<optgroup label="Corporal">
+								<option value="Tratamiento Corporal">Tratamiento Corporal - $25.000</option>
+							</optgroup>
+							<optgroup label="Especiales">
+								<option value="OCUPADO">🚫 HORARIO OCUPADO</option>
+								<option value="TURNO FIJO">📌 TURNO FIJO</option>
+							</optgroup>
+						</select>
+					</div>
+					<div class="form-actions">
+						<button type="button" class="cancel-btn" id="cancel-appointment">Cancelar</button>
+						<button type="submit" class="save-btn">💾 Guardar Turno</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
 		<!-- Firebase Scripts -->
 		<script type="module">
 			// Import Firebase modules
 			import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-			import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+			import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
 			// Firebase configuration
 			const firebaseConfig = {
@@ -344,6 +629,9 @@
 				collection,
 				addDoc,
 				getDocs,
+				deleteDoc,
+				doc,
+				updateDoc,
 				query,
 				where,
 				orderBy,
@@ -359,6 +647,8 @@
 				currentMonth: new Date(),
 				appointments: [], // Se llenará con datos simulados
 				isLoggedIn: false,
+				selectedDate: null,
+				editingAppointment: null,
 
 				// Datos de login
 				credentials: {
@@ -462,6 +752,39 @@
 						this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
 						this.renderCalendar();
 						this.updateStats();
+					});
+
+					// Botones de acción
+					document.getElementById('add-appointment-btn').addEventListener('click', () => {
+						this.showAppointmentModal('add');
+					});
+
+					document.getElementById('block-time-btn').addEventListener('click', () => {
+						this.showAppointmentModal('block');
+					});
+
+					document.getElementById('add-fixed-btn').addEventListener('click', () => {
+						this.showAppointmentModal('fixed');
+					});
+
+					// Modal events
+					document.getElementById('close-modal').addEventListener('click', () => {
+						this.hideAppointmentModal();
+					});
+
+					document.getElementById('cancel-appointment').addEventListener('click', () => {
+						this.hideAppointmentModal();
+					});
+
+					document.getElementById('appointment-form').addEventListener('submit', (e) => {
+						e.preventDefault();
+						this.saveAppointment();
+					});
+
+					// Actualizar horarios cuando cambie la fecha
+					document.getElementById('appointment-date').addEventListener('change', (e) => {
+						const selectedDate = new Date(e.target.value);
+						this.updateAvailableTimes(selectedDate);
 					});
 				},
 
@@ -583,6 +906,19 @@
 					
 					if (isOtherMonth) {
 						dayDiv.classList.add('other-month');
+					} else if (date) {
+						// Hacer clickeable solo los días del mes actual
+						dayDiv.classList.add('clickable');
+						dayDiv.addEventListener('click', () => {
+							// Remover selección anterior
+							document.querySelectorAll('.calendar-day.selected').forEach(day => {
+								day.classList.remove('selected');
+							});
+							// Seleccionar día actual
+							dayDiv.classList.add('selected');
+							// Mostrar turnos del día
+							this.showDayAppointments(date);
+						});
 					}
 
 					// Marcar día actual
@@ -607,7 +943,8 @@
 									<div class="appointment-client">${appointment.clientName}</div>
 									<div class="appointment-service">${appointment.service}</div>
 								`;
-								appointmentDiv.addEventListener('click', () => {
+								appointmentDiv.addEventListener('click', (e) => {
+									e.stopPropagation(); // Evitar que se active el click del día
 									this.showAppointmentDetails(appointment);
 								});
 								dayDiv.appendChild(appointmentDiv);
@@ -705,6 +1042,283 @@
 					document.getElementById('total-appointments').textContent = monthAppointments.length;
 					document.getElementById('today-appointments').textContent = todayAppointments.length;
 					document.getElementById('week-appointments').textContent = weekAppointments.length;
+				},
+
+				// Gestión de modales y formularios
+				showAppointmentModal: function(type, appointment = null) {
+					const modal = document.getElementById('appointment-modal');
+					const title = document.getElementById('modal-title');
+					const form = document.getElementById('appointment-form');
+					
+					this.editingAppointment = appointment;
+					
+					// Configurar título según el tipo
+					switch(type) {
+						case 'add':
+							title.textContent = 'Agregar Nuevo Turno';
+							break;
+						case 'block':
+							title.textContent = '🚫 Ocupar Horario';
+							break;
+						case 'fixed':
+							title.textContent = '📌 Crear Turno Fijo';
+							break;
+						case 'edit':
+							title.textContent = 'Editar Turno';
+							break;
+					}
+					
+					// Prellenar fecha si hay una seleccionada
+					if (this.selectedDate) {
+						document.getElementById('appointment-date').value = this.selectedDate.toISOString().split('T')[0];
+						this.updateAvailableTimes(this.selectedDate);
+					}
+					
+					// Prellenar servicio según tipo
+					const serviceSelect = document.getElementById('service-select');
+					if (type === 'block') {
+						serviceSelect.value = 'OCUPADO';
+						document.getElementById('client-name').value = 'HORARIO OCUPADO';
+						document.getElementById('client-phone').value = 'N/A';
+					} else if (type === 'fixed') {
+						serviceSelect.value = 'TURNO FIJO';
+						document.getElementById('client-name').value = 'TURNO FIJO';
+						document.getElementById('client-phone').value = 'N/A';
+					}
+					
+					// Prellenar datos si es edición
+					if (appointment) {
+						document.getElementById('appointment-date').value = appointment.date;
+						document.getElementById('appointment-time').value = appointment.time;
+						document.getElementById('client-name').value = appointment.clientName;
+						document.getElementById('client-phone').value = appointment.clientPhone;
+						document.getElementById('service-select').value = appointment.service;
+					}
+					
+					modal.classList.remove('hidden');
+				},
+
+				hideAppointmentModal: function() {
+					const modal = document.getElementById('appointment-modal');
+					const form = document.getElementById('appointment-form');
+					
+					modal.classList.add('hidden');
+					form.reset();
+					this.editingAppointment = null;
+				},
+
+				saveAppointment: async function() {
+					const formData = {
+						date: document.getElementById('appointment-date').value,
+						time: document.getElementById('appointment-time').value,
+						clientName: document.getElementById('client-name').value,
+						clientPhone: document.getElementById('client-phone').value,
+						service: document.getElementById('service-select').value
+					};
+
+					try {
+						if (this.editingAppointment) {
+							// Editar turno existente
+							await this.updateAppointment(this.editingAppointment.id, formData);
+						} else {
+							// Crear nuevo turno
+							await this.addNewAppointment(formData);
+						}
+						
+						this.hideAppointmentModal();
+						await this.loadAppointments();
+						this.renderCalendar();
+						this.updateStats();
+						this.showDayAppointments(this.selectedDate);
+						
+						alert('✅ Turno guardado exitosamente!');
+					} catch (error) {
+						console.error('Error al guardar turno:', error);
+						alert('❌ Error al guardar el turno. Intentá nuevamente.');
+					}
+				},
+
+				addNewAppointment: async function(appointmentData) {
+					if (!window.firebaseDb) {
+						// Fallback a localStorage
+						const appointments = JSON.parse(localStorage.getItem('jvSpaAppointments') || '[]');
+						const newAppointment = {
+							id: Date.now().toString(),
+							...appointmentData,
+							createdAt: new Date().toISOString()
+						};
+						appointments.push(newAppointment);
+						localStorage.setItem('jvSpaAppointments', JSON.stringify(appointments));
+						return newAppointment;
+					}
+
+					// Usar Firebase
+					const { collection, addDoc } = window.firebaseModules;
+					const appointmentsRef = collection(window.firebaseDb, 'appointments');
+					const docRef = await addDoc(appointmentsRef, {
+						...appointmentData,
+						createdAt: new Date().toISOString()
+					});
+					
+					return { id: docRef.id, ...appointmentData };
+				},
+
+				updateAppointment: async function(id, appointmentData) {
+					if (!window.firebaseDb) {
+						// Fallback a localStorage
+						const appointments = JSON.parse(localStorage.getItem('jvSpaAppointments') || '[]');
+						const index = appointments.findIndex(apt => apt.id === id);
+						if (index !== -1) {
+							appointments[index] = { ...appointments[index], ...appointmentData };
+							localStorage.setItem('jvSpaAppointments', JSON.stringify(appointments));
+						}
+						return;
+					}
+
+					// Usar Firebase
+					const { doc, updateDoc } = window.firebaseModules;
+					const appointmentRef = doc(window.firebaseDb, 'appointments', id);
+					await updateDoc(appointmentRef, {
+						...appointmentData,
+						updatedAt: new Date().toISOString()
+					});
+				},
+
+				deleteAppointment: async function(id) {
+					if (!confirm('¿Estás segura de que querés eliminar este turno?')) {
+						return;
+					}
+
+					try {
+						if (!window.firebaseDb) {
+							// Fallback a localStorage
+							const appointments = JSON.parse(localStorage.getItem('jvSpaAppointments') || '[]');
+							const filtered = appointments.filter(apt => apt.id !== id);
+							localStorage.setItem('jvSpaAppointments', JSON.stringify(filtered));
+						} else {
+							// Usar Firebase
+							const { doc, deleteDoc } = window.firebaseModules;
+							const appointmentRef = doc(window.firebaseDb, 'appointments', id);
+							await deleteDoc(appointmentRef);
+						}
+
+						await this.loadAppointments();
+						this.renderCalendar();
+						this.updateStats();
+						this.showDayAppointments(this.selectedDate);
+						
+						alert('✅ Turno eliminado exitosamente!');
+					} catch (error) {
+						console.error('Error al eliminar turno:', error);
+						alert('❌ Error al eliminar el turno. Intentá nuevamente.');
+					}
+				},
+
+				showDayAppointments: function(date) {
+					if (!date) return;
+					
+					this.selectedDate = date;
+					const dateStr = date.toISOString().split('T')[0];
+					const dayAppointments = this.getAppointmentsForDate(date);
+					
+					document.getElementById('selected-date-title').textContent = 
+						`Turnos del ${date.toLocaleDateString('es-AR', { 
+							weekday: 'long', 
+							day: 'numeric', 
+							month: 'long' 
+						})}`;
+					
+					const container = document.getElementById('day-appointments-list');
+					
+					if (dayAppointments.length === 0) {
+						container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.6);">No hay turnos para este día</p>';
+						return;
+					}
+					
+					container.innerHTML = dayAppointments.sort((a, b) => a.time.localeCompare(b.time))
+						.map(appointment => `
+							<div class="appointment-item">
+								<div class="appointment-info">
+									<strong>${appointment.time}</strong> - ${appointment.clientName}<br>
+									<small>📞 ${appointment.clientPhone} | 💅 ${appointment.service}</small>
+								</div>
+								<div class="appointment-actions">
+									<button class="btn-small btn-edit" onclick="AdminPanel.editAppointment('${appointment.id}')">✏️</button>
+									<button class="btn-small btn-delete" onclick="AdminPanel.deleteAppointment('${appointment.id}')">🗑️</button>
+								</div>
+							</div>
+						`).join('');
+				},
+
+				editAppointment: function(id) {
+					const appointment = this.appointments.find(apt => apt.id === id);
+					if (appointment) {
+						this.showAppointmentModal('edit', appointment);
+					}
+				},
+
+				// Función para actualizar horarios disponibles según el día seleccionado
+				updateAvailableTimes: function(date) {
+					const timeSelect = document.getElementById('appointment-time');
+					const dayOfWeek = date.getDay();
+					
+					// Limpiar opciones actuales
+					timeSelect.innerHTML = '<option value="">Seleccionar hora</option>';
+					
+					let availableTimes = [];
+					
+				switch(dayOfWeek) {
+					case 1: // Lunes - de 14:00 a 19:30
+						availableTimes = ['14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
+						break;
+						
+					case 2: // Martes - de 09:00 a 18:00
+						availableTimes = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'];
+						break;
+						
+					case 3: // Miércoles - de 14:00 a 19:30
+						availableTimes = ['14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
+						break;
+						
+					case 4: // Jueves - de 09:00 a 18:00
+						availableTimes = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'];
+						break;
+						
+					case 5: // Viernes - de 09:00 a 16:00
+						availableTimes = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30'];
+						break;
+						
+					default: // Sábado y Domingo - cerrado
+						availableTimes = [];
+						break;
+				}					if (availableTimes.length === 0) {
+						timeSelect.innerHTML = '<option value="">No hay horarios disponibles para este día</option>';
+						return;
+					}
+					
+					// Agregar opciones de horarios
+					availableTimes.forEach(time => {
+						const option = document.createElement('option');
+						option.value = time;
+						option.textContent = time;
+						timeSelect.appendChild(option);
+					});
+					
+					// Actualizar el placeholder con información del día
+					const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+					let scheduleInfo = '';
+					
+					switch(dayOfWeek) {
+						case 1: scheduleInfo = ' (Lunes: 14:00-19:30)'; break;
+						case 2: scheduleInfo = ' (Martes: 09:00-18:00)'; break;
+						case 3: scheduleInfo = ' (Miércoles: 14:00-19:30)'; break;
+						case 4: scheduleInfo = ' (Jueves: 09:00-18:00)'; break;
+						case 5: scheduleInfo = ' (Viernes: 09:00-16:00)'; break;
+						case 6: scheduleInfo = ' (Sábado: CERRADO)'; break;
+						case 0: scheduleInfo = ' (Domingo: CERRADO)'; break;
+					}
+					
+					timeSelect.firstChild.textContent = `Seleccionar hora${scheduleInfo}`;
 				}
 			};
 
