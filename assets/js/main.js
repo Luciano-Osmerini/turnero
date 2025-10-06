@@ -70,6 +70,7 @@
 		selectedDate: null,
 		selectedTime: null,
 		currentStep: 1,
+		isLoadingTimes: false,
 		
 		// Horarios base (se filtran según el día)
 		baseTimes: [
@@ -350,6 +351,10 @@
 		},
 
 		showAvailableTimes: async function() {
+			// Prevenir ejecuciones múltiples simultáneas
+			if (this.isLoadingTimes) return;
+			this.isLoadingTimes = true;
+
 			const dateStr = this.selectedDate.toLocaleDateString('es-AR', {
 				weekday: 'long',
 				year: 'numeric',
@@ -361,13 +366,18 @@
 				`Fecha seleccionada: ${dateStr}`;
 
 			const container = document.getElementById('time-slots');
+			// Limpiar completamente el contenedor
 			container.innerHTML = '';
+			
+			// Forzar un repaint para asegurar que se limpie
+			container.offsetHeight;
 
 			// Obtener horarios específicos para este día
 			const availableTimesForDay = this.getAvailableTimesForDay(this.selectedDate);
 			
 			if (availableTimesForDay.length === 0) {
 				container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.8); padding: 2rem;">📅 No hay horarios disponibles para este día</p>';
+				this.isLoadingTimes = false;
 				return;
 			}
 
@@ -385,6 +395,9 @@
 
 				container.appendChild(slot);
 			}
+			
+			// Liberar bandera de carga
+			this.isLoadingTimes = false;
 		},
 
 		isTimeAvailable: async function(time) {
